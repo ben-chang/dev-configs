@@ -23,4 +23,8 @@ install from docker.com
 
 ## Terminal && editor
 - iTerm2
+  - colorscheme: `material dark`
+  - contrast: slider at 2/5ths of the way over
+  - theme: `avit`
 - vim
+  - Plug plugin manager `curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
