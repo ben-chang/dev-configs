@@ -1,9 +1,11 @@
+" BABY'S FIRST VIMRC
 " basic config
 set nocompatible
 set number
 set showcmd
 set tabstop=2 softtabstop=2 shiftwidth=0 expandtab
 set smartcase
+set hlsearch
 syntax enable
 filetype plugin on
 
@@ -29,4 +31,7 @@ let g:netrw_liststyle=3     " tree view
 
 " custom snippets
 nnoremap ,html :-1read $HOME/.vim/.skeleton.html<CR>3jwf>a
+
+" clear search highlighting with space
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
