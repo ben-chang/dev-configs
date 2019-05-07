@@ -12,6 +12,14 @@ syntax enable
 filetype plugin on
 set background=dark
 set t_Co=256
+set laststatus=2
+set statusline=%#StatusLineNC#
+set statusline+=\ %f
+set statusline+=%=
+set statusline+=\%y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ %l:%c
+set statusline+=\ 
 
 " change cursors on insert, replace, normal (iTerm2)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -34,10 +42,10 @@ command! MakeTags !ctags -R --exclude=.git --exclude=node_modules --exclude=test
 
 " file browsing netrw
 let g:netrw_banner    = 0 " disable annoying banner
-let g:netrw_preview   = 1
-let g:netrw_liststyle = 3
-let g:netrw_winsize   = 20
-let g:netrw_list_hide = '**/node_modules/**'
+let g:netrw_preview   = 1 " display preview with p in v split
+let g:netrw_liststyle = 3 " tree display
+let g:netrw_winsize   = 20 " 20 percent file browser when preview open
+let g:netrw_list_hide = '**/node_modules/**' " dont index node_modules
 
 " custom snippets
 nnoremap ,cl :-1read $HOME/.vim/snippets/js/console_log.js.snippet<CR>%i
