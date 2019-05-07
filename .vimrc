@@ -7,16 +7,18 @@ set tabstop=2 softtabstop=2 shiftwidth=0 expandtab
 set autoindent
 set copyindent
 set smartcase
+set incsearch
 set hlsearch
 syntax enable
 filetype plugin on
 set background=dark
 set t_Co=256
+" statusline
 set laststatus=2
 set statusline=%#StatusLineNC#
-set statusline+=\ %f
+set statusline+=\ %f%m
+set statusline+=\ %y
 set statusline+=%=
-set statusline+=\%y
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\ %l:%c
 set statusline+=\ 
