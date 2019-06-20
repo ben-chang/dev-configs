@@ -13,6 +13,14 @@ syntax enable
 filetype plugin on
 set background=dark
 set t_Co=256
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 " statusline
 set laststatus=2
 set statusline=%#StatusLineNC#
@@ -35,9 +43,7 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 " fuzzy find, ignore node_modules and .git
 set path+=**
 set wildmenu
-set wildignore+=**/node_modules/**
-set wildignore+=**/.git/**
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=**/node_modules/**,**/.git/**,*/tmp/*,*.so,*.swp,*.zip,*.pyc
 
 " custom command to execute ctags
 command! MakeTags !ctags -R --exclude=.git --exclude=node_modules --exclude=test .
@@ -52,6 +58,12 @@ let g:netrw_list_hide = '**/node_modules/**' " dont index node_modules
 " custom snippets
 nnoremap ,cl :-1read $HOME/.vim/snippets/js/console_log.js.snippet<CR>%i
 nnoremap ,pr :-1read $HOME/.vim/snippets/py/print.py.snippet<CR>%i
+
+" ctrl p fuzzy find
+nnoremap <C-p> :find */
+
+" Set the :make cmd
+"set makeprg=bin/test
 
 " clear search highlighting with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -68,6 +80,7 @@ Plug 'w0rp/ale' " linter
 Plug 'tpope/vim-commentary' " quick commenting out line
 Plug 'tpope/vim-surround' " surround text
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 " Plugin config
