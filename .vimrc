@@ -14,6 +14,7 @@ filetype plugin on
 set background=dark
 set t_Co=256
 set number relativenumber
+set colorcolumn=120
 
 augroup numbertoggle
   autocmd!
