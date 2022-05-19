@@ -15,6 +15,7 @@ set background=dark
 set t_Co=256
 set number relativenumber
 set colorcolumn=120
+set maxmempattern=5000
 
 augroup numbertoggle
   autocmd!
@@ -74,14 +75,21 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 map bn :bn<cr>
 map bp :bp<cr>
 map bd :bd<cr>
+" clear buffer and move to next available buffer
+command Bd bp | sp | bn | bd
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'w0rp/ale' " linter
 Plug 'tpope/vim-commentary' " quick commenting out line
 Plug 'tpope/vim-surround' " surround text
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'NLKNguyen/papercolor-theme' " good theme with clear syntax highlighting
+Plug 'dracula/vim', { 'as': 'dracula' } "cool theme, but not sure how to get to have good syntax highlighting
+Plug 'leafgarland/typescript-vim' " typescript tools
+Plug 'pangloss/vim-javascript' " better javascript syntax
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " go tools
+Plug 'jparise/vim-graphql' " gql syntax
+Plug 'prettier/vim-prettier' " prettier for vim
 call plug#end()
 
 " Plugin config
@@ -89,11 +97,33 @@ colorscheme PaperColor
 nmap <silent> \aj :ALENext<cr>
 nmap <silent> \ak :ALEPrevious<cr>
 
-" OTHER PLUGINS
-" Plug 'kien/ctrlp.vim' " fuzzy finder for files
-" Plug 'scrooloose/nerdtree' " tree view of project structure
-" Plug 'bling/vim-bufferline' " list of buffers at bottom
-" Plug 'isRuslan/vim-es6' " es6 syntax support
-" Plug 'numirias/semshi', { 'do': 'UpdateRemotePlugins' } " python syntax highlighting
-" Plug 'mxw/vim-jsx' " .jsx syntax support
-" Plug 'ervandew/supertab' " tab autocompletion
+" configure go:
+let g:go_fmt_command = "goimports"
+autocmd FileType go setlocal tabstop=2|setlocal shiftwidth=2|setlocal softtabstop=2|setlocal noexpandtab
+autocmd FileType go compiler go
+au FileType go nmap gd <Plug>(go-def)
+
+" prettier autosave
+let g:prettier#autoformat = 0
+let g:prettier#config#arrow_parens = 'avoid'
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.graphql,*.md Prettier
+
+" set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+
+" optional go syntax highlighting options
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let b:ale_linters = ['govet', 'gofmt', 'tsserver', 'eslint']
